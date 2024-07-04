@@ -3,77 +3,55 @@ package main
 import (
 	utils "aoc/golang"
 	"fmt"
-	"strconv"
-	"strings"
 	"unicode"
 )
 
 func main() {
 	//puzzle1Input := utils.ReadLines("day01/puzzle1.txt")
-	//fmt.Println("Part 1: ", getCalibrationValues(puzzle1Input))
+	//fmt.Println("Part 1: ", getSeeds(puzzle1Input))
 	//
-	puzzle2Input := utils.ReadLines("day01/puzzle2.txt")
-	fmt.Println("Part 2: ", getCalibrationValues(puzzle2Input))
+	puzzle1Input := utils.ReadLines("day01/puzzle1.txt")
+	calibrations := getCalibrations(puzzle1Input)
+	sumCalibrations := sumUpCalibrations(calibrations)
+	fmt.Println("Part 1: ", sumCalibrations)
 }
 
-func getCalibrationValues(lines []string) int {
-	totalCalibrationValue := 0
+func getCalibrations(lines []string) []int {
+	var calibrations []int
+
 	for _, line := range lines {
-		firstDigit := getFirstDigit(line)
-		lastDigit := getLastDigit(line)
-		combined := strconv.Itoa(firstDigit) + strconv.Itoa(lastDigit)
-		totalCalibrationValue += fromString(combined)
-	}
-	return totalCalibrationValue
-}
+		var firstDigit, lastDigit rune
+		var firstDigitFound bool
+		var lastDigitIndex int
 
-func fromString(str string) int {
-	val, err := strconv.Atoi(str)
-	if err != nil {
-		panic(err)
-	}
-	return val
-}
-
-func getFirstDigit(s string) int {
-	for i := 0; i < len(s); i++ {
-		if found, d := containsSpelledDigit(s[:i]); found {
-			return d
-		} else if unicode.IsDigit(rune(s[i])) {
-			return int(s[i] - '0')
+		fmt.Println(line)
+		for y, char := range line {
+			if unicode.IsDigit(char) && !firstDigitFound {
+				firstDigit = char
+				firstDigitFound = true
+				fmt.Printf("firstDigit found at %d: %c \n", y, char)
+			}
+			if unicode.IsDigit(char) {
+				lastDigit = char
+				lastDigitIndex = y
+			}
 		}
+		fmt.Printf("lastDigit found at %d: %c \n", lastDigitIndex, lastDigit)
+		firstDigitInt := int(firstDigit - '0')
+		lastDigitInt := int(lastDigit - '0')
+		combineDigits := firstDigitInt*10 + lastDigitInt
+
+		calibrations = append(calibrations, combineDigits)
 	}
-	panic("No digit found in " + s)
+
+	return calibrations
 }
 
-func getLastDigit(s string) int {
-	for i := len(s) - 1; i >= 0; i-- {
-		if found, d := containsSpelledDigit(s[i:]); found {
-			return d
-		} else if unicode.IsDigit(rune(s[i])) {
-			return int(s[i] - '0')
-		}
+func sumUpCalibrations(calibrations []int) int {
+	var sum = 0
+	for _, number := range calibrations {
+		sum += number
 	}
-	panic("No digit found in " + s)
-}
 
-var spelledDigits = map[string]int{
-	"one":   1,
-	"two":   2,
-	"three": 3,
-	"four":  4,
-	"five":  5,
-	"six":   6,
-	"seven": 7,
-	"eight": 8,
-	"nine":  9,
-}
-
-func containsSpelledDigit(s string) (bool, int) {
-	for k, v := range spelledDigits {
-		if strings.Contains(s, k) {
-			return true, v
-		}
-	}
-	return false, 0
+	return sum
 }
