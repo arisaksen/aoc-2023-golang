@@ -10,7 +10,7 @@ import (
 
 func main() {
 	fmt.Println("Part 1: ", part1("day05/puzzle.txt"))
-
+	fmt.Println("Part 2: ", part2("day05/puzzle.txt"))
 }
 
 func part1(filename string) int {

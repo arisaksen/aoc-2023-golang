@@ -16,6 +16,13 @@ func TestPart1(t *testing.T) {
 		assert.Equal(t, expected, actual)
 	})
 
+	t.Run("Part 2", func(t *testing.T) {
+		expected := 46
+		actual := part2("example.txt")
+
+		assert.Equal(t, expected, actual)
+	})
+
 	t.Run("test", func(t *testing.T) {
 		input := []string{"a", "b", "c", "d", "e", "f", "g", "h"}
 		result := make([]string, 0, len(input)/2)
