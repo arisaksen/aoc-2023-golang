@@ -2,6 +2,7 @@ package main
 
 import (
 	utils "aoc/golang"
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -13,6 +14,15 @@ func TestPart1(t *testing.T) {
 		actual := part1("example.txt")
 
 		assert.Equal(t, expected, actual)
+	})
+
+	t.Run("test", func(t *testing.T) {
+		input := []string{"a", "b", "c", "d", "e", "f", "g", "h"}
+		result := make([]string, 0, len(input)/2)
+		for i := 1; i < len(input); i += 2 {
+			result = append(result, input[i-1]+input[i])
+		}
+		fmt.Println(result)
 	})
 
 }
