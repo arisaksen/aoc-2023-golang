@@ -8,8 +8,8 @@ import (
 )
 
 func main() {
-	fmt.Println("Part 1: ", part1("day06/puzzle1.txt"))
-	fmt.Println("Part 2: ", part2("day06/puzzle1.txt"))
+	fmt.Println("Part 1: ", part1("day06/puzzle.txt"))
+	fmt.Println("Part 2: ", part2("day06/puzzle.txt"))
 }
 
 func part1(filename string) int {
